@@ -40,7 +40,7 @@ app.post("/register", async (request, response) => {
     VALUES
     ('${username}', '${name}', '${hashedPassword}','${gender}', '${location}');`;
       await db.run(createUserQuery);
-      response.send(" Successful registration of the registrant");
+      response.send("User created successfully");
       console.log(`${username} user registered successfully`);
     } else {
       response.status(400);
@@ -64,7 +64,7 @@ app.post("/login", async (request, response) => {
       existingUser.password
     );
     if (isPasswordMatched === true) {
-      response.send("Successful login of the user");
+      response.send("Login success!");
     } else {
       response.status(400);
       response.send("Invalid password");
@@ -93,10 +93,10 @@ app.put("/change-password", async (request, response) => {
         password = '${hashedNewPassword}'
         WHERE username = '${username}';`;
         await db.run(updatePasswordQuery);
-        response.send("Successful password update");
+        response.send("Password updated");
       } else {
         response.status(400);
-        response.send(" Password is too short");
+        response.send("Password is too short");
       }
     } else {
       response.status(400);
@@ -107,3 +107,5 @@ app.put("/change-password", async (request, response) => {
     response.send("Invalid User");
   }
 });
+
+module.exports = app;
