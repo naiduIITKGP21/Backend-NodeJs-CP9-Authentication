@@ -52,3 +52,25 @@ app.post("/register", async (request, response) => {
     console.log(`${existingUser.username} user already exits`);
   }
 });
+
+//API 2: login user
+app.post("/login", async (request, response) => {
+  const { username, password } = request.body;
+  const existingUserQuery = `SELECT * FROM user WHERE username = '${username}';`;
+  const existingUser = await db.get(existingUserQuery);
+  if (existingUser !== undefined) {
+    const isPasswordMatched = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+    if (isPasswordMatched === true) {
+      response.send("Successful login of the user");
+    } else {
+      response.status(400);
+      response.send("Invalid password");
+    }
+  } else {
+    response.status(400);
+    response.send("Invalid user");
+  }
+});

@@ -8,3 +8,12 @@ Content-Type: application/json
   "gender": "male",
   "location": "Detroit"
 }
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "adam_richard",
+  "password": "richard_567"
+}
